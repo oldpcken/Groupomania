@@ -1,0 +1,20 @@
+{
+  "name": "groupomania",
+  "version": "1.0.0",
+  "description": "Project 7 for web developer",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "KDR",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.2.1",
+    "bcrypt": "^5.1.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.5-lts.1",
+    "sequelize": "^6.27.0"
+  }
+}
