@@ -9,7 +9,6 @@ const postRoutes = require('./routes/post');
 
 const dbConfig = require('./config/db.config');
 const Sequelize = require('sequelize');
-// const tedious = require('tedious');
 
 const app = express();
 dotenv.config();
@@ -20,25 +19,25 @@ const sequelize = new Sequelize('dbConfig.database', 'dbConfig.username', 'dbCon
       host: dbConfig.HOST,
       port: dbConfig.PORT,
       dialect: dbConfig.dialect,
-//       pool: {
-//           max: dbConfig.pool.max,
-//           min: dbConfig.pool.min,
-//           idle: dbConfig.pool.idle,
-//       },
+    //   pool: {
+    //       max: dbConfig.pool.max,
+    //       min: dbConfig.pool.min,
+    //       idle: dbConfig.pool.idle,
+    //   },
 //   dialectOptions: {
 //       instanceName: dbConfig.dialectOptions.instanceName,
 //       domain: dbConfig.dialectOptions.domain
 //   }
-    });
+});
 
-sequelize.authenticate()
-    .then(() => {
-        console.log('Connection Successful')
-    })
-    .catch((error) => {
-        console.log('Unable to Connect to Database, ', error)
+// sequelize.authenticate()
+//     .then(() => {
+//         console.log('Connection Successful')
+//     })
+//     .catch((error) => {
+//         console.log('Unable to Connect to Database, ', error)
 
-    });
+//     });
 
 app.use(express.json());
 
@@ -53,6 +52,6 @@ app.use((req, res, next) => {
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // app.use('/api/posts', postRoutes);
-// app.use('/api/auth', userRoutes);
+app.use('/api/auth', userRoutes);
 
 module.exports = app;
