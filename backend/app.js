@@ -13,8 +13,13 @@ const Sequelize = require('sequelize');
 const app = express();
 dotenv.config();
 
+const connection = new Sequelize(dbConfig);
+
+module.exports = connection;
+
+
 // Connection to Postgres database
-const sequelize = new Sequelize('dbConfig.database', 'dbConfig.username', 'dbConfig.password', 
+const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, 
     {
       host: dbConfig.HOST,
       port: dbConfig.PORT,
@@ -29,15 +34,16 @@ const sequelize = new Sequelize('dbConfig.database', 'dbConfig.username', 'dbCon
 //       domain: dbConfig.dialectOptions.domain
 //   }
 });
+// console.log(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig.HOST, dbConfig.PORT);
 
-// sequelize.authenticate()
-//     .then(() => {
-//         console.log('Connection Successful')
-//     })
-//     .catch((error) => {
-//         console.log('Unable to Connect to Database, ', error)
+sequelize.authenticate()
+    .then(() => {
+        console.log('Connection Successful')
+    })
+    .catch((error) => {
+        console.log('Unable to Connect to Database, ', error)
 
-//     });
+    });
 
 app.use(express.json());
 
