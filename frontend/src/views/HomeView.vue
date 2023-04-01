@@ -7,3 +7,15 @@ import TheWelcome from '../components/TheWelcome.vue'
     <TheWelcome />
   </main>
 </template>
+
+<script>
+export default{
+   
+
+}
+
+</script>
+
+<script>
+
+</script>

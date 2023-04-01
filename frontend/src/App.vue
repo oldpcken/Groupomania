@@ -5,20 +5,37 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <img alt="Groupomania logo" class="logo" src="@/assets/Groupomania_Logos/icon.svg" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <HelloWorld msg="Ken did it!!!!" />
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/signup">Signup</RouterLink>
+        <RouterLink to="/login">Login</RouterLink>
+        <RouterLink to="/profile">Profile</RouterLink>
+        <RouterLink to="/posts">Post</RouterLink>
       </nav>
     </div>
   </header>
 
   <RouterView />
+  <!-- <Signup /> -->
 </template>
+
+<script>
+import Signup from './views/Signup.vue'
+
+export default{
+    name: 'App',
+    components: { Signup }
+}
+
+//TODO add conditional rendering for menu items
+//TODO Put menu items at top of page
+
+</script>
 
 <style scoped>
 header {

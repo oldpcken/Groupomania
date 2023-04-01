@@ -7,10 +7,17 @@
       <h3>
         <slot name="heading"></slot>
       </h3>
-      <slot></slot>
+      <slot>3rd slot</slot>
     </div>
   </div>
 </template>
+
+<script>
+export default{
+  
+}
+
+</script>
 
 <style scoped>
 .item {
