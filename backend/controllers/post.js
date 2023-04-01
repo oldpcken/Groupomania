@@ -1,49 +1,54 @@
 // in /controllers/post.js
 
-// const Post = require('../models/post');
-// const fs = require('fs');
+// const { User } = require('../models');
+const { Post } = require('../models');
+const fs = require('fs');
 
-// // View (get) All Posts
-// exports.getAllPosts = (req, res, next) => {
+// View (get) All Posts
+exports.getAllPosts = (req, res, next) => {
 
-//     Post.find()
-//         .then((posts) => {
-//             res.status(200).json(posts);
-//         })
-//         .catch((error) => {
-//             res.status(400).json({
-//                 error: error
-//             });
-//         });
-// };
+    Post.find()
+        .then((posts) => {
+            res.status(200).json(posts);
+        })
+        .catch((error) => {
+            res.status(400).json({
+                error: error
+            });
+        });
+};
 
-// // Create a Post
-// exports.createPost = (req, res, next) => {
+// Create a Post
+exports.createPost = (req, res, next) => {
 
-//     const url = req.protocol + '://' + req.get('host');
-    
-//     req.body.posting = JSON.parse(req.body.posting);
+    const url = req.protocol + '://' + req.get('host');
+    console.log(req.body);
+    // const parsedBody.postText = JSON.parse(req.body.postText);
 
-//     const post = new Post({
-//         userId: req.body.post.userId,
-//         userName: req.body.post.userName,
-//         posting: req.body.post.posting,
-//         imageUrl: url + '/images/' + req.file.filename,
-//         read: req.body.post.read 
-//     });
+    const post = new Post({
+        userId: req.body.userId,
+        userName: req.body.userName,
+        postText: req.body.postText,
+        // postPic: url + '/images/' + req.file.filename,
+        userRead: req.body.userRead 
+    });
 
-//     post.save()
-//         .then(() => {
-//             res.status(201).json({
-//                 message: 'Post Successfully Created!'
-//             });
-//         })
-//         .catch((error) => {
-//             res.status(400).json({
-//                 error: error
-//             });
-//         });
-// };
+    post.save()
+        .then(() => {
+            res.status(201).json({
+                message: 'Post Successfully Created!'
+            });
+        })
+        .catch((error) => {
+            res.status(400).json({
+                error: error
+            });
+        });
+};
+//TODO add controller to mark a post read
+//TODO finish retrieving a post
+//TODO finish create post with media
+//TODO get all posts finished
 
 // // Retrieve A Post
 // exports.getOnePost = (req, res, next) => {
