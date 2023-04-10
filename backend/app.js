@@ -7,16 +7,10 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const path = require('path');
+const dbConfig = require('./config/db.config');
 
 const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
-
-const dbConfig = require('./config/db.config');
-const Sequelize = require('sequelize');
-
-const connection = new Sequelize(dbConfig);
-
-module.exports = connection;
 
 // set up cross-origin resource sharing
 app.use((req, res, next) => {
@@ -25,6 +19,11 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
+
+const Sequelize = require('sequelize');
+const connection = new Sequelize(dbConfig);
+
+module.exports = connection;
 
 // Connection to Postgres database
 const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, 
@@ -40,7 +39,6 @@ sequelize.authenticate()
     })
     .catch((error) => {
         console.log('Unable to Connect to Database, ', error)
-
     });
 
 app.use(express.json());

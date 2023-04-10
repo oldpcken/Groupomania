@@ -7,12 +7,16 @@ const MIME_TYPES = {
     'image/jpeg': 'jpg',
     'image/png': 'png',
     'image/webp': 'webp',
-    'image/jfif': 'jfif'
+    'image/jfif': 'jfif',
+    'image/mp4': 'mp4',
+    'image/mp3': 'mp3',
+    'image/wmv': 'wmv',
+    'image/avi': 'avi'
 };
 
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
-        callback(null, 'images');
+        callback(null, './backend/images');
     },
     filename: (req, file, callback) => {
         const name = file.originalname.split(' ').join('_').split('.')[0];
@@ -21,4 +25,4 @@ const storage = multer.diskStorage({
     }
 });
 
-module.exports = multer({storage: storage}).single('image');
+module.exports = multer({storage: storage}).single('media');

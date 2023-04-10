@@ -13,7 +13,7 @@ exports.signup = (req, res, next) => {
                 userName: req.body.userName,
                 password: hash                
             });
-            console.log('User', req.body.userName);
+            // console.log('User', req.body.userName);
             user.save()
                 .then(() => {
                     res.status(201).json({
@@ -40,9 +40,6 @@ exports.login = (req, res, next) => {
                     error: new Error('User Not Found!')
                 });
             }
-            console.log(req.body.userName);
-            console.log(req.body.password);
-            console.log(user.password);
             bcrypt.compare(req.body.password, user.password)
                 .then((valid) => {
                     if (!valid) {
@@ -50,14 +47,13 @@ exports.login = (req, res, next) => {
                             error: new Error('Incorrect Password!')
                         });
                     }
-                    //TODO add userName to reponse output
                     const token = jwt.sign(
-                        { userId: user.id }, 
+                        { userId: user.id },
                         'RANDOM_TOKEN_SECRET', 
                         {expiresIn: '24h' });
-                    res.status(200).json({
-                       
+                    res.status(200).json({                       
                         userId: user.id,
+                        user: user.userName,
                         token: token
                     });
                 })
