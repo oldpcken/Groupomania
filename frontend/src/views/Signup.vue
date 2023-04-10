@@ -9,61 +9,69 @@
 
         <input type="password" size="50" v-model="postData.password" required/>
     </form>
-    <button @click.prevent="signup">SIGNUP</button>
-    <h1>This will be the signup page</h1>
-    <h2>A user name and a password will be needed!</h2>
+    <button class="btn" @click.prevent="signup">SIGNUP</button>    
   </div>
 </template>
 
 <script>
-import axios from "axios";
+    import axios from "axios";
 
-export default {
-    data() {
-        return {
-            postData: { userName: '', password: ''},
-        };
-    },
-    methods: {
-        signup() {
-            axios
-                .post("http://localhost:3000/api/auth/signup", this.postData)
-                .then((response) => {
-                    console.log(response);
-                    // using stringify to beautify the output
-                    this.res = JSON.stringify(response.data);
-                })
-                .catch((errors) => {
-                    console.log(errors); // Errors
-                });
-        }
-    },
-    
-};
+    export default {
+        data() {
+            return {
+                postData: { userName: '', password: ''},
+            };
+        },
+        methods: {
+            signup() {
+                axios
+                    .post("http://localhost:3000/api/auth/signup", this.postData)
+                    .then((response) => {
+                        console.log(response);
+                        // using stringify to beautify the output
+                        this.res = JSON.stringify(response.data);
+                        // Navigate to the Login page after successful signup
+                        this.$router.push({ path: '/login' })
+                    })
+                    .catch((errors) => {
+                        console.log(errors); // Errors
+                    });
+            }
+        },
+    };
 
 </script>
 
-<style>
+<style scoped>
 @media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
+  .signup {
+    min-height: 50vh;
     display: flex;
     align-items: center;
+    background-color: rgb(177, 227, 247);
   }
 }
 
 form {
    min-width: 420;
+   margin: 10px 5px;
 }
 
 label {
-    margin: 5px 0;
+    margin: 5px;
     display: inline-block;
     font-weight: bold;
 }
 
 input {
     display: block;
-    margin: 15px 0;
+    margin: 10px 5px;
+    height: 2rem;
+}
+
+.btn {
+    display: inline-block;
+    height: 1.5rem;
+    background-color: aquamarine;
 }
 </style>

@@ -1,58 +1,62 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
   <header>
-    <img alt="Groupomania logo" class="logo" src="@/assets/Groupomania_Logos/icon.svg" width="125" height="125" />
-
+    <img alt="Groupomania logo" class="logo" src="@/assets/Groupomania_Logos/icon-left-font.png" />
+    <h1>Employee Forum</h1>
     <div class="wrapper">
-      <HelloWorld msg="Ken did it!!!!" />
-
       <nav>
-        <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/signup">Signup</RouterLink>
         <RouterLink to="/login">Login</RouterLink>
         <RouterLink to="/profile">Profile</RouterLink>
         <RouterLink to="/posts">Post</RouterLink>
+        <RouterLink to="/onepost">OnePost</RouterLink>
+        <RouterLink to="/read">Markread</RouterLink>
       </nav>
     </div>
-  </header>
+   </header>
 
   <RouterView />
-  <!-- <Signup /> -->
 </template>
 
 <script>
-import Signup from './views/Signup.vue'
 
 export default{
-    name: 'App',
-    components: { Signup }
+   
 }
 
 //TODO add conditional rendering for menu items
+
 //TODO Put menu items at top of page
 
 </script>
 
-<style scoped>
+<style>
 header {
+  display: block;
   line-height: 1.5;
-  max-height: 100vh;
 }
 
 .logo {
   display: block;
-  margin: 0 auto 2rem;
+  size: 50vw;
+  margin: 0 auto;
+}
+
+h1 {
+  display: block;
+  text-align: center;
+  margin: -30px 0 0 0;
 }
 
 nav {
+  display: block;
   width: 100%;
-  font-size: 12px;
+  font-size: 1rem;
   text-align: center;
-  margin-top: 2rem;
+  margin: 2rem;
 }
 
 nav a.router-link-exact-active {
@@ -77,24 +81,23 @@ nav a:first-of-type {
   header {
     display: flex;
     place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+    padding: 10px; 
   }
 
   .logo {
-    margin: 0 2rem 0 0;
+    margin: -140px 0 0 0;
   }
 
   header .wrapper {
     display: flex;
-    place-items: flex-start;
+    place-items: flex;
     flex-wrap: wrap;
   }
 
   nav {
     text-align: left;
     margin-left: -1rem;
-    font-size: 1rem;
-
+    font-size: 2rem;
     padding: 1rem 0;
     margin-top: 1rem;
   }

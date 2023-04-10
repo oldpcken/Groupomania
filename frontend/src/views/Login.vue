@@ -1,32 +1,97 @@
 <template>
   <div class="login">
     <form>
-        <label>USERNAME</label>     
-        <input type="text" size="50" required />
-        <label>PASSWORD</label>
-        <input type="text" size="50" required />
-    </form>
-    <button>LOGIN</button>
+        <label>USERNAME:</label>
 
-    <h1>This will be the login page</h1>
-    <h2>The user enters their user name and password</h2>
+        <input type="text" size="50" v-model="postData.userName" required />
+
+        <label>PASSWORD:</label>
+
+        <input type="password" size="50" v-model="postData.password" required />
+    </form>
+    <button class="btn" @click.prevent="login">LOGIN</button>
   </div>
 </template>
 
 <script>
-    //TODO add import/export code
-    //TODO add axios post
-    //TODO add userid & token to local storage
-    //TODO use vue router to go to post.vue
+    import axios from "axios";
 
+    export default {
+        data() {
+            return {
+                postData: { userName: '', password: ''},
+            };
+        },
+        methods: {
+            login() {
+                axios
+                    .post("http://localhost:3000/api/auth/login", this.postData)
+                    .then((response) => {
+                        console.log(response);
+                        // using stringify to beautify the output
+                        this.res = JSON.stringify(response.data);
+                        // Navigate to the Posts page after successful login
+                        this.$router.push({ path: '/posts' })
+                    })
+                    .catch((errors) => {
+                        console.log(errors);
+                    });
+                    // Get user data to put into local storage
+                    // .get("http://localhost:3000/api/auth/login", this.postData)
+                    // .then((response) => {
+                    //     console.log(response);
+                    //     let result = axios.get(`https://reqres.in/api/users?email=${this.email}&password=${this.password}&delay=1`)
+                    //     if (result.status == 200 /*&& result.data.length > 0*/) {
+                    //         localStorage.setItem('userInfo', JSON.stringify(result.data))
+                    //         //this.$router.push('/firstPage')
+                    //         this.status = 'Success'
+                    //     } else {
+                    //         this.status = 'Failure'
+                    //     }
+                    //     //TODO add userid & token to local storage
+                    //     // using stringify to beautify the output
+                    //     this.res = JSON.stringify(response.data);
+
+                    // })
+                    // .catch((errors) => {
+                    //     console.log(errors); // Errors
+                    // })
+            }
+        }
+    };
+        
 </script>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
+<style scoped>
+/* @media (min-width: 996px) {
+  .login {
+    min-height: 50vh;
     display: flex;
     align-items: center;
+    background-color: lightyellow;
   }
+} */
+
+form {
+   min-width: 420;
+   margin: 10px 5px;
+}
+
+label {
+    margin: 5px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+input {
+    display: block;
+    margin: 10px 5px;
+    height: 2em;
+}
+
+.btn {
+    display: inline-block;
+    height: 1.5rem;
+    background-color: aquamarine;
 }
 </style>
