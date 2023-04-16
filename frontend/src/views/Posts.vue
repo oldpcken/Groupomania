@@ -1,16 +1,25 @@
 <template>
   <div class="post">
     
-    <h1>Creat a Post Here</h1>
+    <h2>Creat a Post Here</h2>
 
     <form>
+        <label>User Name:</label>
+
+        <input type="text" size="50" v-model="postData.userName" required />
+
+        <label>Title:</label>
+
+        <input type="text" size="50" v-model="postData.title" required />
+
         <label>Posts:</label>
 
         <textarea type="text" size="3000" v-model="postData.postText" required />
         
     </form>
     <div class="file-upload">
-        <input type="file" >
+        <label>Attachment (JPG, PNG, WEBP, WMV, MP4, MP3, )</label>
+        <input type="file" ref="file" @change="media" >
     </div>
     <button class="btn" @click.prevent="post">POST IT</button>
     
@@ -20,16 +29,31 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "axios"
 
     export default {
         data() {
             return {
-                postData: { postText: '', postPic: ''},
+                postData: { userName: '', title: '', postText: '', media: ''},
             };
         },
         methods: {
-
+             post() {
+                //TODO add bearer token to post request 
+                axios
+                    .post("http://localhost:3000/api/posts", this.postdata )
+                    .then((response) => {
+                        console.log(response);
+                        // using stringify to beautify the output
+                        this.res = JSON.stringify(response.data);
+                        
+                        // Navigate to the Posts page after successful login
+                        // this.$router.push({ path: '/posts' })
+                    })
+                    .catch((errors) => {
+                        console.log(errors);
+                    });
+             } 
         }
       }
 
@@ -40,17 +64,18 @@ import axios from "axios";
 
 
 <style>
-@media (min-width: 1024px) {
+/*@media (min-width: 1024px) {*/
   .post {
-    min-height: 50vh;
+    /* min-height: 50vh; */
     display: flex;
+    flex-direction: column;
     align-items: center;
   }
-}
+/*}*/
 
 form {
-   min-width: 420;
-   margin: 10px 5px;
+   width: 90%;
+   margin: 0;
 }
 
 label {
@@ -62,14 +87,24 @@ label {
 textarea {
     display: block;
     margin: 10px 5px;
-    min-height: 20vh;
-    min-width: 40vw;
+    height: 100px;
+    width: 90%;
 }
 
 .btn {
     display: block;
-    height: 1.5rem;
+    height: 2rem;
     background-color: aquamarine;
+    margin: 15px;
 }
 
+.file-upload {
+    color:blue;
+}
+
+input {
+    display: block;
+    margin: 10px 5px;
+    height: 2em;
+}
 </style>

@@ -9,16 +9,16 @@
 <script>
 //TODO use v-if for menu items to show or not
 
-
+//TODO add indication that a post was read
 </script>
 
 
 <style>
-@media (min-width: 1024px) {
-  .onepost {
-    min-height: 50vh;
+.onepost {
     display: flex;
+    flex-direction: column;
     align-items: center;
-  }
 }
+
+
 </style>

@@ -43,17 +43,19 @@
 </script>
 
 <style scoped>
-@media (min-width: 1024px) {
+/*@media (min-width: 1024px) {*/
   .signup {
-    min-height: 50vh;
+    width: 100%;
+    max-width: 512px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     background-color: rgb(177, 227, 247);
   }
-}
+/*}*/
 
 form {
-   min-width: 420;
+   max-width: 600px;
    margin: 10px 5px;
 }
 
@@ -67,11 +69,12 @@ input {
     display: block;
     margin: 10px 5px;
     height: 2rem;
+    width: 95%;
 }
 
 .btn {
     display: inline-block;
-    height: 1.5rem;
+    height: 2rem;
     background-color: aquamarine;
 }
 </style>

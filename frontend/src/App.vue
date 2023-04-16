@@ -8,12 +8,13 @@ import { RouterLink, RouterView } from 'vue-router'
     <h1>Employee Forum</h1>
     <div class="wrapper">
       <nav>
+        <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/signup">Signup</RouterLink>
         <RouterLink to="/login">Login</RouterLink>
         <RouterLink to="/profile">Profile</RouterLink>
         <RouterLink to="/posts">Post</RouterLink>
         <RouterLink to="/onepost">OnePost</RouterLink>
-        <RouterLink to="/read">Markread</RouterLink>
+        <!-- TODO add logout button -->
       </nav>
     </div>
    </header>
@@ -24,6 +25,7 @@ import { RouterLink, RouterView } from 'vue-router'
 <script>
 
 export default{
+  //TODO add method for logout - use LocalStorage removeitem()
    
 }
 
@@ -35,7 +37,8 @@ export default{
 
 <style>
 header {
-  display: block;
+  display: flex;
+  flex-direction: column;
   line-height: 1.5;
 }
 
@@ -49,12 +52,13 @@ h1 {
   display: block;
   text-align: center;
   margin: -30px 0 0 0;
+  font-size: 1rem;
 }
 
 nav {
   display: block;
   width: 100%;
-  font-size: 1rem;
+  font-size: 1.2rem;
   text-align: center;
   margin: 2rem;
 }
@@ -77,15 +81,16 @@ nav a:first-of-type {
   border: 0;
 }
 
-@media (min-width: 1024px) {
-  header {
+/*@media (min-width: 1024px) {*/
+  /* header {
     display: flex;
     place-items: center;
     padding: 10px; 
-  }
+  } */
 
   .logo {
-    margin: -140px 0 0 0;
+    margin: -20px 0 0 0;
+    width: 100%;
   }
 
   header .wrapper {
@@ -94,12 +99,12 @@ nav a:first-of-type {
     flex-wrap: wrap;
   }
 
-  nav {
+  /* nav {
     text-align: left;
     margin-left: -1rem;
-    font-size: 2rem;
+    font-size: 1rem;
     padding: 1rem 0;
     margin-top: 1rem;
-  }
-}
+  } */
+/*}*/
 </style>
