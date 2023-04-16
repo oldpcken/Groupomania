@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
+  //TODO add title field
   Post.init({
     userId: { type: DataTypes.INTEGER, allowNull: false },
     message: DataTypes.TEXT,

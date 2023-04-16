@@ -3,15 +3,15 @@
 const multer = require('multer');
 
 const MIME_TYPES = {
+    'audio/mpeg': 'mp3',
+    'audio.wav': 'wav',
+    'video/mp4': 'mp4',
+    'video/x-ms-wmv': 'wmv',
     'image/jpg': 'jpg',
     'image/jpeg': 'jpg',
     'image/png': 'png',
     'image/webp': 'webp',
-    'image/jfif': 'jfif',
-    'image/mp4': 'mp4',
-    'image/mp3': 'mp3',
-    'image/wmv': 'wmv',
-    'image/avi': 'avi'
+    'image/jfif': 'jfif'        
 };
 
 const storage = multer.diskStorage({
@@ -22,6 +22,7 @@ const storage = multer.diskStorage({
         const name = file.originalname.split(' ').join('_').split('.')[0];
         const extension = MIME_TYPES[file.mimetype];
         callback(null, name + Date.now() + '.' + extension);
+        console.log('extension is ', extension);
     }
 });
 

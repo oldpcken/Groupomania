@@ -13,7 +13,6 @@ exports.signup = (req, res, next) => {
                 userName: req.body.userName,
                 password: hash                
             });
-            // console.log('User', req.body.userName);
             user.save()
                 .then(() => {
                     res.status(201).json({
@@ -44,7 +43,7 @@ exports.login = (req, res, next) => {
                 .then((valid) => {
                     if (!valid) {
                         return res.status(401).json({
-                            error: new Error('Incorrect Password!')
+                            error: new Error('Incorrect Password Given!')
                         });
                     }
                     const token = jwt.sign(
@@ -55,7 +54,7 @@ exports.login = (req, res, next) => {
                         userId: user.id,
                         user: user.userName,
                         token: token
-                    });
+                    });      
                 })
                 
         })
@@ -84,7 +83,7 @@ exports.delete = (req, res, next) => {
             User.destroy({ where: { id: req.params.id } })
                 .then(() => {
                     res.status(200).json({
-                        message: 'The User Has Been Deleted!'
+                        message: 'User Has Been Deleted!'
                     });
                 })
                 .catch((error) => {
