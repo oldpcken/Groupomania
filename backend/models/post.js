@@ -9,10 +9,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-  }
-  //TODO add title field
+  }  
   Post.init({
     userId: { type: DataTypes.INTEGER, allowNull: false },
+    title: DataTypes.STRING,
     message: DataTypes.TEXT,
     mediaUrl: DataTypes.STRING,
     usersRead: DataTypes.ARRAY(DataTypes.INTEGER)
