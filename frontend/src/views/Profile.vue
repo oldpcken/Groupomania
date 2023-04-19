@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   data() {
@@ -18,18 +18,24 @@ export default {
     };
   },
   beforeCreate() {
-    //TODO b4create - see if localstaorage has login info, if not push to login page
-
+    if (localStorage.getItem("loginData") === null) {
+      // Go to login page if user is not logged in
+      this.$router.push({ path: '/login' })
+    }
   },
 
   methods: {
     profile() {
+      localStorage.getItem('loginData', JSON.parse(response.data))
       //TODO get userID from local storage
-
-      const userId = 1
+      
       //TODO add auth beartoken to authorization header
       axios
-        .delete(`http://localhost:3000/api/auth/${userId}`)
+        .delete((`http://localhost:3000/api/auth/${userId}`),
+            {
+                headers: { Authorization: this.user.token },
+                params: { userId: this.user.id }
+          })
         .then((response) => {
           // using stringify to beautify the output
           // this.res = JSON.stringify(response.data);
@@ -54,16 +60,13 @@ export default {
 </script>
 
 
-<style>
-/*@media (min-width: 1024px) { */
+<style scoped>
 .profile {
   min-height: 50vh;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
-/*}*/
 
 h1 {
   padding: 15px;
@@ -77,6 +80,6 @@ h2 {
 
 btn {
   margin: 20px;
-  /* margin: 5px auto; */
+  color: black;
 }
 </style>

@@ -28,16 +28,14 @@
                     .post("http://localhost:3000/api/auth/login", this.postData)
                     .then((response) => {
                         console.log(response);
-
                         localStorage.setItem('loginData', JSON.stringify(response.data))
                         
                         // Navigate to the Posts page after successful login
-                        this.$router.push({ path: '/posts' })
+                        this.$router.push({ path: '/' })
                     })
                     .catch((errors) => {
                         console.log(errors);
-                    });
-                   //TODO add userid & token to local storage                   
+                    });                                      
             }
         }
     };
@@ -51,7 +49,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgb(251, 251, 195);
+    background-color: rgb(251, 188, 174);
 }
 
 form {
@@ -75,6 +73,7 @@ input {
 .btn {
     display: inline-block;
     height: 2rem;
-    background-color: rgb(217, 245, 156);
+    color: black;
+    background-color: rgb(247, 104, 133);
 }
 </style>

@@ -7,18 +7,31 @@
 </template>
 
 <script>
-//TODO use v-if for menu items to show or not
+export default {
+  data() {
 
-//TODO add indication that a post was read
+  },
+  //TODO add indication that a post was read
+
+  beforeCreate() {
+    if (localStorage.getItem('loginData') === null) {
+      // Go to login page if user is not logged in
+      this.$router.push({ path: '/login' })
+    }
+  },
+  methods: {
+
+
+  }
+}
+
 </script>
 
 
 <style>
 .onepost {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
-
 </style>

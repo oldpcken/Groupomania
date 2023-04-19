@@ -14,7 +14,7 @@
 </template>
 
 <script>
-    import axios from "axios";
+    import axios from 'axios';
 
     export default {
         data() {
@@ -50,7 +50,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgb(177, 227, 247);
+    background-color: rgb(249, 218, 218);
   }
 /*}*/
 
@@ -75,6 +75,6 @@ input {
 .btn {
     display: inline-block;
     height: 2rem;
-    background-color: aquamarine;
+    background-color: rgb(245, 243, 152);
 }
 </style>
