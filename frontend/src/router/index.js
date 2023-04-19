@@ -3,7 +3,7 @@ import Home from '../views/Home.vue'
 import Signup from '../views/Signup.vue'
 import Login from '../views/Login.vue'
 import Profile from '../views/Profile.vue'
-import Posts from '../views/Posts.vue'
+import CreatePost from '../views/createPost.vue'
 import OnePost from '../views/onePost.vue'
 
 
@@ -28,8 +28,8 @@ const router = createRouter({
     },
     {
       path: '/posts',
-      name: 'post',
-      component: Posts     
+      name: 'createPost',
+      component: CreatePost     
     },
     {
       path: '/onepost',

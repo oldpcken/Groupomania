@@ -25,7 +25,7 @@ import { RouterLink, RouterView } from 'vue-router'
         </RouterLink>
 
         <RouterLink to="/posts" v-if="!['login', 'signup'].includes($route.name)">
-            Post
+            createPost
         </RouterLink>
 
         <RouterLink to="/onepost" v-if="!['login', 'signup'].includes($route.name)">
