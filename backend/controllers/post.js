@@ -26,6 +26,7 @@ exports.createPost = (req, res, next) => {
         const parsedPost = JSON.parse(req.body.post);
         const post = new Post({
             userId: parsedPost.userId,
+            title: parsedPost.title,
             message: parsedPost.message,
             mediaUrl: url + '/images/' + req.file.filename,
             userRead: [] 
@@ -44,6 +45,7 @@ exports.createPost = (req, res, next) => {
     } else {
         const post = new Post({
             userId: req.body.userId,
+            title: req.body.title,
             message: req.body.message,
             userRead: []
         });
@@ -81,7 +83,10 @@ exports.markPostRead = (req, res, next) => {
 
     Post.findOne({ where: { id: req.params.id } })
         .then((post) => {
-            res.status(200).json(post);            
+            res.status(200).json(post); 
+            // Add userId to the usersRead array!
+            // const post = new Post({
+            //     userRead: req.body.usersRead
         })
         .catch((error) => {
             res.status(404).json({
