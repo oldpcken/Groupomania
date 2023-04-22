@@ -29,7 +29,7 @@ exports.createPost = (req, res, next) => {
             title: parsedPost.title,
             message: parsedPost.message,
             mediaUrl: url + '/images/' + req.file.filename,
-            userRead: [] 
+            usersRead: parsedPost.usersRead
         });
         post.save()
         .then(() => {
@@ -47,7 +47,7 @@ exports.createPost = (req, res, next) => {
             userId: req.body.userId,
             title: req.body.title,
             message: req.body.message,
-            userRead: []
+            usersRead: req.body.usersRead
         });
         post.save()
             .then(() => {
@@ -80,13 +80,21 @@ exports.getOnePost = (req, res, next) => {
 // Mark a Post Read By a User
 //TODO add controller to mark a post read
 exports.markPostRead = (req, res, next) => {
-
+    
     Post.findOne({ where: { id: req.params.id } })
         .then((post) => {
+            const readId = req.body.userId;
+            const alreadyRead = req.body.usersRead.includes(req.body.userId);
+            if (alreadyRead) {
+                // don't push
+                console.log('User has already read the post!')
+            } else {
+                // Add userId to the usersRead array!
+                req.body.usersRead.push(readId); 
+                console.log('User has now read the post!')
+            }
             res.status(200).json(post); 
-            // Add userId to the usersRead array!
-            // const post = new Post({
-            //     userRead: req.body.usersRead
+                        
         })
         .catch((error) => {
             res.status(404).json({
