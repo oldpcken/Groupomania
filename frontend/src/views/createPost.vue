@@ -1,26 +1,27 @@
 <template>
     <div class="post">
 
-        <h2>Creat a Post Here</h2>
+        <h2>Please Create Your Post Here</h2>
 
         <form>
             <label>User Name:</label>
-            <input type="text" size="50" v-model="postData.userName" required />
+            <input type="text" size="40" required />
 
             <label>Title:</label>
-            <input type="text" size="50" v-model="postData.title" required />
+            <input type="text" size="40" v-model="postData.title" required />
 
-            <label>Posts:</label>
-            <textarea type="text" size="3000" v-model="postData.message"></textarea>
+            <label>Post:</label>
+            <textarea type="text" cols="40" rows="10" v-model="postData.message"></textarea>
 
             <div class="file-upload">
-                <label>Attachment (JPG, PNG, WEBP, WMV, MP4, MP3, )</label>
-                <input type="file" @change="media($event)" />
-            </div>
-            <button class="btn" @click.prevent="submit">POST IT</button>
-        </form>
 
-        <h2>Scroll through employee posts & click to read</h2>
+                <label>File Attachment (JPG, PNG, WEBP, WMV, MP4, MP3, WAV)</label>
+                <input type="file" @change="media($event)" />
+
+                <button class="btn" @click.prevent="submit">POST IT</button>
+            </div>
+
+        </form>
 
     </div>
 </template>
@@ -31,10 +32,11 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            postData: { 
-                userName: '', 
-                title: '', 
-                message: ''}
+            postData: {
+                userId: '',
+                title: '',
+                message: ''
+            }
         };
     },
     beforeCreate() {
@@ -44,45 +46,84 @@ export default {
         }
     },
     methods: {
-        media( event ) {
-            this.media = event.target.files[0];
-        },
+        media(event) {
+            this.media = event.target.files[0]; 
+            if (isValidMedia(file)) {
+                return this.processMedia(media);
+            }
 
-        submit() {     
-            // localStorage.getItem('loginData', JSON.parse(post.data));
+            this.$emit("invalid-file");           
+        },   
+        submit() {  
+            console.log('Submit entered');
+            let loginData = JSON.parse(localStorage.getItem('loginData')) || [];
+            //FIXME add userid to post data
+            this.postData.userId = loginData.userId;           
+            
+            console.log('This is this.postData.userId ', this.postData.userId);
 
-            JSON.parse(localStorage.getItem('loginData'));
+            console.log('This is this.media ', this.media);
 
-            let formData = new FormData();     
-            formData.append('post', this.postData);
-            formData.append('media', this.media);
+            
+            if (this.media !== $event) {
+                console.log('No media path taken');
+               
+                console.log(this.postData);
+                axios
+                    .post(('http://localhost:3000/api/posts', 
+                            JSON.stringify(this.postData)),                        
+                        { 
+                            headers: { 'Authorization': 'Bearer ' + loginData.token,
+                                        'Content-Type':  'application/json'
+                            }                         
+                        })
+                    .then(function (response) {
+                        
+                        this.postData = response.data;
+                        console.log('SUCCESS!!');
+                    }.bind(this))
 
-            console.log('loginData ', this.loginData); 
-            console.log('postData ', this.postData); 
-            console.log('this.media ', this.media); 
-            console.log('formData ', formData);
+                    // Navigate to the posts(Home) page after successful posting
+                    // this.$router
+                    //     .push({ path: '/' })
+                    //     .then(() => { this.$router.go() })
 
-            axios
-                .post(('http://localhost:3000/api/posts'),
-                    formData, {
+                    .catch(function (error) {
+                        this.axiosError = error;
+                        console.log('FAILURE!!');
+                    }.bind(this));
+                
+            } else {
+                
+                console.log('Else path taken');
+                let formData = new FormData();
+                formData.append('post', JSON.stringify(this.postData));
+                formData.append('media', this.media);
+
+                axios
+                    .post(('http://localhost:3000/api/posts'),
+                        formData, {
                         headers: {
-                            'Authorization': 'Bearer ' + this.user.token,
+                            'Authorization': 'Bearer ' + loginData.token,
                             'Content-Type': 'multipart/form-data'
                         }
-                })
-                .then(function (response) {
-                    this.axiosResponse = response.data;
-                    console.log('SUCCESS!!');
-                }.bind(this))
+                    })
+                    .then(function (response) {
+                        
+                        this.postData = response.data;
+                        console.log('SUCCESS!!');
+                    }.bind(this))
 
-                // Navigate to the posts(Home) page after successful posting
-                this.$router.push({ path: '/' })
+                    // Navigate to the posts(Home) page after successful posting
+                    // this.$router
+                    //     .push({ path: '/' })
+                    //     .then(() => { this.$router.go() })
 
-                .catch(function (error) {
-                    this.axiosError = error;
-                    console.log('FAILURE!!');
-                }.bind(this));                
-
+                    .catch(function (error) {
+                        this.axiosError = error;
+                        console.log('FAILURE!!');
+                    }.bind(this));
+            } 
         }
     }
 }
@@ -110,19 +151,25 @@ label {
 textarea {
     display: block;
     margin: 10px 5px;
-    height: 100px;
-    width: 90%;
+    /* height: 100px;
+    width: 90%; */
 }
 
 .btn {
     display: block;
     height: 2rem;
-    background-color: rgb(208, 214, 212);
+    background-color: rgb(249, 218, 218);
     margin: 15px;
+    color: red;
 }
 
 .file-upload {
-    color: blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: red;
+    width: 100%;
+    margin-top: 20px;
 }
 
 input {

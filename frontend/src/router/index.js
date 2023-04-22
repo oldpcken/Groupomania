@@ -32,7 +32,7 @@ const router = createRouter({
       component: CreatePost     
     },
     {
-      path: '/onepost',
+      path: '/onepost/:id',
       name: 'onePost',
       component: OnePost   
     },

@@ -1,45 +1,45 @@
 <template>
-  <div class="login">
-    <form>
-        <label>USERNAME:</label>
+    <div class="login">
+        <form>
+            <label>USERNAME:</label>
 
-        <input type="text" size="50" v-model="postData.userName" required />
+            <input type="text" size="50" v-model="postData.userName" required />
 
-        <label>PASSWORD:</label>
+            <label>PASSWORD:</label>
 
-        <input type="password" size="50" v-model="postData.password" required />
-    </form>
-    <button class="btn" @click.prevent="login">LOGIN</button>
-  </div>
+            <input type="password" size="50" v-model="postData.password" required />
+        </form>
+        <button class="btn" @click.prevent="login">LOGIN</button>
+    </div>
 </template>
 
 <script>
-    import axios from "axios";
+import axios from "axios";
 
-    export default {
-        data() {
-            return {
-                postData: { userName: '', password: ''},
-            };
-        },
-        methods: {
-            login() {
-                axios
-                    .post("http://localhost:3000/api/auth/login", this.postData)
-                    .then((response) => {
-                        console.log(response);
-                        localStorage.setItem('loginData', JSON.stringify(response.data))
-                        
-                        // Navigate to the Posts page after successful login
-                        this.$router.push({ path: '/' })
-                    })
-                    .catch((errors) => {
-                        console.log(errors);
-                    });                                      
-            }
+export default {
+    data() {
+        return {
+            postData: { userName: '', password: '' },
+        };
+    },
+    methods: {
+        login() {
+            axios
+                .post("http://localhost:3000/api/auth/login", this.postData)
+                .then((response) => {
+                    console.log(response);
+                    localStorage.setItem('loginData', JSON.stringify(response.data))
+
+                    // Navigate to the Posts page after successful login
+                    this.$router.push({ path: '/' })
+                })
+                .catch((errors) => {
+                    console.log(errors);
+                });
         }
-    };
-        
+    }
+};
+
 </script>
 
 <style scoped>
@@ -49,7 +49,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgb(251, 188, 174);
+    background-color: rgb(249, 218, 218);
 }
 
 form {
@@ -66,8 +66,8 @@ label {
 input {
     display: block;
     margin: 10px 5px;
-    height: 2em; 
-    width: 95%;   
+    height: 2rem;
+    width: 95%;
 }
 
 .btn {

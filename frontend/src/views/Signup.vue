@@ -1,62 +1,60 @@
 <template>
-  <div class="signup">
-    <form>
-        <label>USERNAME:</label>
+    <div class="signup">
+        <form>
+            <label>USERNAME:</label>
 
-        <input type="text" size="50" v-model="postData.userName" required/>
+            <input type="text" size="50" v-model="postData.userName" required />
 
-        <label>PASSWORD:</label>
+            <label>PASSWORD:</label>
 
-        <input type="password" size="50" v-model="postData.password" required/>
-    </form>
-    <button class="btn" @click.prevent="signup">SIGNUP</button>    
-  </div>
+            <input type="password" size="50" v-model="postData.password" required />
+        </form>
+        <button class="btn" @click.prevent="signup">SIGNUP</button>
+    </div>
 </template>
 
 <script>
-    import axios from 'axios';
+import axios from 'axios';
 
-    export default {
-        data() {
-            return {
-                postData: { userName: '', password: ''},
-            };
-        },
-        methods: {
-            signup() {
-                axios
-                    .post("http://localhost:3000/api/auth/signup", this.postData)
-                    .then((response) => {
-                        console.log(response);
-                        // using stringify to beautify the output
-                        this.res = JSON.stringify(response.data);
-                        // Navigate to the Login page after successful signup
-                        this.$router.push({ path: '/login' })
-                    })
-                    .catch((errors) => {
-                        console.log(errors); // Errors
-                    });
-            }
-        },
-    };
+export default {
+    data() {
+        return {
+            postData: { userName: '', password: '' },
+        };
+    },
+    methods: {
+        signup() {
+            axios
+                .post("http://localhost:3000/api/auth/signup", this.postData)
+                .then((response) => {
+                    console.log(response);
+                    // using stringify to beautify the output
+                    this.res = JSON.stringify(response.data);
+                    // Navigate to the Login page after successful signup
+                    this.$router.push({ path: '/login' })
+                })
+                .catch((errors) => {
+                    console.log(errors); // Errors
+                });
+        }
+    },
+};
 
 </script>
 
 <style scoped>
-/*@media (min-width: 1024px) {*/
-  .signup {
+.signup {
     width: 100%;
     max-width: 512px;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: rgb(249, 218, 218);
-  }
-/*}*/
+}
 
 form {
-   max-width: 600px;
-   margin: 10px 5px;
+    max-width: 600px;
+    margin: 10px 5px;
 }
 
 label {
@@ -75,6 +73,7 @@ input {
 .btn {
     display: inline-block;
     height: 2rem;
-    background-color: rgb(245, 243, 152);
+    color: black;
+    background-color: rgb(247, 104, 133);
 }
 </style>

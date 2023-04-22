@@ -12,11 +12,11 @@ import { RouterLink, RouterView } from 'vue-router'
             Home
         </RouterLink>
 
-        <RouterLink to="/signup" v-if="!['home', 'profile', 'post', 'onePost'].includes($route.name)" >
+        <RouterLink to="/signup" v-if="!['home', 'profile', 'createPost', 'onePost'].includes($route.name)" >
             Signup
         </RouterLink>
 
-        <RouterLink to="/login" v-if="!['home', 'profile', 'post', 'onePost'].includes($route.name)" >
+        <RouterLink to="/login" v-if="!['home', 'profile', 'createPost', 'onePost'].includes($route.name)" >
             Login
         </RouterLink>
 
@@ -25,7 +25,7 @@ import { RouterLink, RouterView } from 'vue-router'
         </RouterLink>
 
         <RouterLink to="/posts" v-if="!['login', 'signup'].includes($route.name)">
-            createPost
+            Create Post
         </RouterLink>
 
         <RouterLink to="/onepost" v-if="!['login', 'signup'].includes($route.name)">

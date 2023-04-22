@@ -2,6 +2,7 @@
   <div class="profile">
     <h1>Employee User Profile</h1>
 
+    <h2>Account for {{ name }}</h2>
     <h2>If you no longer want to use the forum, you may delete your account!</h2>
 
     <button class="btn" @click.prevent="profile">DELETE your account</button>
@@ -14,32 +15,35 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      postData: { id: '', userName: '' },
+      // data to return
     };
   },
   beforeCreate() {
-    if (localStorage.getItem("loginData") === null) {
+    if (localStorage.getItem('loginData') === null) {
       // Go to login page if user is not logged in
       this.$router.push({ path: '/login' })
     }
   },
-
   methods: {
     profile() {
-      localStorage.getItem('loginData', JSON.parse(response.data))
-      //TODO get userID from local storage
-      
-      //TODO add auth beartoken to authorization header
+      // Get local storage data
+      let loginData = JSON.parse(localStorage.getItem('loginData')) || [];
+
+      console.log(loginData);
+
       axios
-        .delete((`http://localhost:3000/api/auth/${userId}`),
-            {
-                headers: { Authorization: this.user.token },
-                params: { userId: this.user.id }
+        .delete((`http://localhost:3000/api/auth/${loginData.userId}`),
+          {
+            headers: {
+              'Authorization': 'Bearer ' + loginData.token
+            }
           })
         .then((response) => {
           // using stringify to beautify the output
-          // this.res = JSON.stringify(response.data);
-
+          this.res = JSON.stringify(response.data);
+          const name = loginData.user;
+          // Clear the user data from local storage 
+          localStorage.removeItem('loginData');
           // Navigate to the Signup page after successful account deletion
           this.$router.push({ path: '/signup' })
         })
@@ -53,12 +57,7 @@ export default {
 
 //TODO show username , user id, and token taken from local storage
 
-//TODO add code the the to delete the user button
-
-//TODO add axios code to do do delete, grab bearer token, clear local storage and redirect to login page
-
 </script>
-
 
 <style scoped>
 .profile {
@@ -70,7 +69,7 @@ export default {
 
 h1 {
   padding: 15px;
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 h2 {
