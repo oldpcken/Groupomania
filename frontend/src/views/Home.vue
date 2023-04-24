@@ -5,19 +5,19 @@
     <table>
       <thead>
         <td>
-          <th>Id</th>
-          <th>Title</th>          
+        <th>Id</th>
+        <th>Title</th>
         </td>
-      </thead>      
+      </thead>
       <tbody>
-        <tr v-for="(post,i) in postData" :key="post.id">
-          <td>{{ i + 1 }}</td>
-          
-          <a :href="'/onepost/'+ (i + 1)" @click="readIt">
-              {{ post.title }}          
+        <tr v-for="post in postData" :key="post.id">
+          <td>{{ post.id }}</td>
+
+          <a :href="'/onepost/' + post.id" @click="readIt">
+            {{ post.title }}
           </a>
-          <span class="didYou">{{this.readStatus}}</span>          
-                  
+          <span v-if="!isRead(post)" class="didYou">unread</span>
+
         </tr>
       </tbody>
     </table>
@@ -39,16 +39,17 @@ export default {
   },
   data() {
     return {
-      postData: ''
+      postData: '',
+      userId: null
     }
-  },  
+  },
   mounted() {
     this.allPosts();
   },
   methods: {
     allPosts() {
       let loginData = JSON.parse(localStorage.getItem('loginData')) || [];
-
+      this.userId = loginData.userId;
       axios
         .get("http://localhost:3000/api/posts",
           {
@@ -56,33 +57,25 @@ export default {
               'Authorization': 'Bearer ' + loginData.token
             }
           })
-        .then((response) => {
-          this.formatPostData(response.data);
+        .then((response) => {          
+          this.postData = response.data;
           console.log(response);
 
           // using stringify to beautify the output
-          this.res = JSON.stringify(response.data);          
+          this.res = JSON.stringify(response.data);
         })
         .catch((errors) => {
           console.log(errors);
         });
     },
-    formatPostData(post) {
-      this.postData = [];
-      for (let key in post) {
-        this.postData.push({ ...post[key], id: key });
-      }
-    },
+    isRead(post) {
+      return post.usersRead && post.usersRead.includes(this.userId);
+    },    
     createPost() {
       // Navigate to the Create Post page after selecting button
       this.$router.push({ path: '/posts' })
     }
-  },
-  //TODO show add read indicator
-  readIt() {
-    const readStatus="Unread";
-    this.$router.push({ path: `/onepost/${post.id}` })  
-  }
+  },    
 }
 
 </script>
@@ -97,9 +90,9 @@ a {
 }
 
 table {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
 }
 

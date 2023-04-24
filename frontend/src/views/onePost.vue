@@ -6,7 +6,7 @@
       {{ this.post.message }}
     </p>
 
-    <audio v-if="getExtension(post) === 'mp3'" controls 
+    <!-- <audio v-if="getExtension(post) === 'mp3'" controls 
         :src="this.post.mediaUrl" type="audio/mpeg" alt="MP3 Player">
          Your browser does not support the audio element.
     </audio>
@@ -14,17 +14,19 @@
         :src="this.post.mediaUrl" type="audio/wav" alt="WAV Audio Player">
         Your browser does not support the audio element.
     </audio>
-    <video v-else-if="getExtension(post) === 'wmv'" width="400" controls 
+    <video v-else-if="getExtension(post) === 'wmv'" width="400" controls autoplay
         :src="this.post.mediaUrl" type="video/x-ms-wmv" alt="WMV Player">
       Your browser does not support the video element.
     </video>
-    <video v-else-if="getExtension(post) === 'mp4'" width="400" controls 
+    <video v-else-if="getExtension(post) === 'mp4'" width="400" controls autoplay
         :src="this.post.mediaUrl" type="video/mp4" alt="MP4 Player">
         Your browser does not support the video element.
-    </video>
-    <img v-else="getExtension(post) === 'jpg' || 'webp' || 'png' || 'jfif'"                  
+    </video> -->
+    <img v-if="['jpg', 'png', 'webp', 'jfif'].includes(getExtension(post))" 
         :src="this.post.mediaUrl" width='400' alt="picture">
-
+    <p v-else="getExtension(post) === null">
+      <hr>
+    </p>
     <button class=btn @click.prevent="postsPage">Back to Posts</button>
   </div>
 </template>
@@ -45,13 +47,13 @@ export default {
     }
   },
   mounted() {
-    this.getOnePost()    
+    this.getOnePost()
   },
   methods: {
     getExtension(post) {
       const url = post.mediaUrl;
       console.log('this is url: ', url);
-      return url && url.slice(url.lastIndexOf('.') + 1 );
+      return url && url.slice(url.lastIndexOf('.') + 1);
     },
     getOnePost() {
       console.log('geting one post');
@@ -70,6 +72,8 @@ export default {
 
           // using stringify to beautify the output
           this.post = response.data;
+
+          this.readIt();
         })
         .catch((errors) => {
           console.log(errors);
@@ -78,6 +82,29 @@ export default {
     postsPage() {
       // Navigate back to the Posts Post page after viewing post
       this.$router.push({ path: '/' })
+    },
+    readIt() {
+      console.log('Marking as read');
+      let loginData = JSON.parse(localStorage.getItem('loginData')) || [];
+      axios
+        .put(`http://localhost:3000/api/posts/${this.$route.params.id}/read`,
+          {
+            userId: loginData.userId
+          },
+          {
+            headers: {
+              'Authorization': 'Bearer ' + loginData.token
+            }
+          })
+        .then((response) => {
+          console.log(response);
+          res.status(300).json({
+            message: 'Post read processing'
+          })
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
     }
   }
 }
