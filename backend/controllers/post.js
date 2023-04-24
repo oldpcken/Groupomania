@@ -29,7 +29,7 @@ exports.createPost = (req, res, next) => {
             title: parsedPost.title,
             message: parsedPost.message,
             mediaUrl: url + '/images/' + req.file.filename,
-            usersRead: parsedPost.usersRead
+            usersRead: []
         });
         post.save()
         .then(() => {
@@ -47,7 +47,7 @@ exports.createPost = (req, res, next) => {
             userId: req.body.userId,
             title: req.body.title,
             message: req.body.message,
-            usersRead: req.body.usersRead
+            usersRead: []
         });
         post.save()
             .then(() => {
@@ -78,27 +78,32 @@ exports.getOnePost = (req, res, next) => {
 };
 
 // Mark a Post Read By a User
-//TODO add controller to mark a post read
 exports.markPostRead = (req, res, next) => {
     
     Post.findOne({ where: { id: req.params.id } })
         .then((post) => {
             const readId = req.body.userId;
-            const alreadyRead = req.body.usersRead.includes(req.body.userId);
+            const alreadyRead = post.usersRead.includes(readId);
+            
             if (alreadyRead) {
-                // don't push
+                // don't push to array
+                res.status(304).json({ message: 'Post Already Read!'});
                 console.log('User has already read the post!')
             } else {
                 // Add userId to the usersRead array!
-                req.body.usersRead.push(readId); 
-                console.log('User has now read the post!')
-            }
-            res.status(200).json(post); 
-                        
+                post.update({ usersRead: [ ...post.usersRead, readId]})
+                    .then((post) => {
+                        post.save()
+                            .then((post) => {
+                                console.log('User has now read the post!')
+                                res.status(200).json(post);
+                            });
+                    })                 
+            }                            
         })
         .catch((error) => {
-            res.status(404).json({
-                error: error
+            res.status(500).json({
+                error: error.message || error
             });
         });
 };

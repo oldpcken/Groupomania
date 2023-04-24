@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     message: DataTypes.TEXT,
     mediaUrl: DataTypes.STRING,
-    usersRead: DataTypes.ARRAY(DataTypes.INTEGER)
+    usersRead: { type: DataTypes.ARRAY(DataTypes.INTEGER), defaultValue: [] },
   }, {
     sequelize,
     modelName: 'Post',
