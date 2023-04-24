@@ -10,13 +10,13 @@
         </td>
       </thead>      
       <tbody>
-        <tr v-for="post in postData" :key="post.id">
-          <td>{{ post.id }}</td>
+        <tr v-for="(post,i) in postData" :key="post.id">
+          <td>{{ i + 1 }}</td>
           
-          <a :href="'/onepost/'+ post.id" @click="readIt">
+          <a :href="'/onepost/'+ (i + 1)" @click="readIt">
               {{ post.title }}          
           </a>
-          <button class="didYou">Unread</button>          
+          <span class="didYou">{{this.readStatus}}</span>          
                   
         </tr>
       </tbody>
@@ -41,10 +41,8 @@ export default {
     return {
       postData: ''
     }
-  },
-  //TODO add indication that a post was read
+  },  
   mounted() {
-    console.log('text');
     this.allPosts();
   },
   methods: {
@@ -63,9 +61,7 @@ export default {
           console.log(response);
 
           // using stringify to beautify the output
-          this.res = JSON.stringify(response.data);
-
-          //TODO show title on home page with link, add read indicator
+          this.res = JSON.stringify(response.data);          
         })
         .catch((errors) => {
           console.log(errors);
@@ -82,7 +78,9 @@ export default {
       this.$router.push({ path: '/posts' })
     }
   },
-  readIt(id) {
+  //TODO show add read indicator
+  readIt() {
+    const readStatus="Unread";
     this.$router.push({ path: `/onepost/${post.id}` })  
   }
 }
@@ -94,19 +92,19 @@ h2 {
   color: rgb(247, 66, 102);
 }
 
-tbody {
-justify-content: space-between;
-
+a {
+  color: black;
 }
 
-textarea {
-  width: 100%;
-  height: 60%;
-  background-color: light rgb(245, 240, 240)
+table {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
 }
 
 button {
-  background-color: rgb(247, 66, 102);
+  background-color: rgb(247, 104, 133);
   text-align: center;
   margin: 1px auto;
   color: black;
@@ -117,5 +115,22 @@ button {
   justify-items: right;
   align-items: right;
   margin-left: 10px;
+}
+
+th {
+  font-size: 1.5rem;
+  padding: 2px;
+  margin: 50px 50px;
+}
+
+tr {
+  font-size: 1.5rem;
+  padding: 2px;
+  margin: 5px 5px;
+}
+
+span {
+  padding: 0 2px;
+  background-color: rgb(250, 167, 184);
 }
 </style>

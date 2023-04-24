@@ -48,11 +48,11 @@ export default {
     methods: {
         media(event) {
             this.media = event.target.files[0]; 
-            if (isValidMedia(file)) {
-                return this.processMedia(media);
-            }
+            // if (isValidMedia(file)) {
+            //     return this.processMedia(media);
+            // }
 
-            this.$emit("invalid-file");           
+            // this.$emit("invalid-file");           
         },   
         submit() {  
             console.log('Submit entered');
@@ -65,7 +65,7 @@ export default {
             console.log('This is this.media ', this.media);
 
             
-            if (this.media !== $event) {
+            if (!this.media) {
                 console.log('No media path taken');
                
                 console.log(this.postData);

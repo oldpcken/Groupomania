@@ -20,16 +20,12 @@ import { RouterLink, RouterView } from 'vue-router'
             Login
         </RouterLink>
 
-        <RouterLink to="/profile" v-if="!['login', 'signup'].includes($route.name)">
-            Profile
-        </RouterLink>
-
         <RouterLink to="/posts" v-if="!['login', 'signup'].includes($route.name)">
             Create Post
         </RouterLink>
 
-        <RouterLink to="/onepost" v-if="!['login', 'signup'].includes($route.name)">
-            OnePost
+        <RouterLink to="/profile" v-if="!['login', 'signup'].includes($route.name)">
+            Profile
         </RouterLink>
 
         <button @click.prevent="logout" v-if="!['login', 'signup'].includes($route.name)">
