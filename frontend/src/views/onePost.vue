@@ -1,22 +1,36 @@
 <template>
   <div class="onepost">
-    <h1>The forum post you clicked on</h1>
+    <h1>{{ this.post.title }}</h1>
 
     <p>
-      {{ post.message }}
-    </p> 
-    <!--TODO add v-if to media types-->
-    <!-- <audio controls>
-        <source src="" type="audio/mpeg">
-        <source src="" type="audio/wav">
+      {{ this.post.message }}
+    </p>
+    <img v-if="['png','jpeg','webp'].includes(this.post.media)"
+        :src="post.mediaUrl" width='400' alt="picture"
+    >   
+    <audio v-if="['mp3'].includes(this.post.media)" controls         
+       :src="this.mediaUrl" type="audio/mpeg" alt="MP3 Player">        
         Your browser does not support the audio element.
-    </audio> -->
-    <!-- <video width="5000" height="240" controls>
-        <source src="" type="video/mp4">
-        <source :src="this.post.mediaUrl" type="video/x-ms-wmv">
-        Your browser does not support the video tag.
-    </video> -->
-    <img :src="this.post.mediaUrl" width="500">
+    </audio>
+    
+    <!--I think I tried this way -->
+    <!-- <audio v-if="'mime-type' = 'wav'" controls>  -->
+    <!--I think I tried this way too-->
+    <audio v-if="'type' = 'audio/wav'" controls>    
+        <source :src="this.post.mediaUrl" type="audio/wav" alt="WAV Audio Player">
+        Your browser does not support the audio element.
+    </audio>
+
+    <video v-if="['wmv'].includes(this.post.media)" width="400" controls
+        :src="this.post.mediaUrl" type="video/x-ms-wmv" alt="WMV Player">
+        Your browser does not support the video element.
+    </video>
+    <video v-if="['mp4'].includes(this.post.media)" width="400" controls 
+        :src="this.post.mediaUrl" type="video/mp4" alt="MP4 Player">        
+        Your browser does not support the video element.
+    </video>
+    
+    <button class=btn @click.prevent="postsPage">Back to Posts</button>
   </div>
 </template>
 
@@ -28,13 +42,13 @@ export default {
       return {
         post: {}
       }
-  },
+  },  
   beforeCreate() {
     if (localStorage.getItem('loginData') === null) {
       // Go to login page if user is not logged in
       this.$router.push({ path: '/login' })
     }
-  },
+  },  
   mounted() {
       this.getOnePost() 
   },
@@ -61,7 +75,10 @@ export default {
               console.log(errors);
             });
       },
-
+    postsPage() {
+    // Navigate back to the Posts Post page after viewing post
+    this.$router.push({ path: '/' })  
+    },
   }
 }
 </script>
@@ -73,4 +90,9 @@ export default {
   flex-direction: column;
   align-items: center;
 }
+
+p {
+  font-size: 1.5rem;
+}
+
 </style>
