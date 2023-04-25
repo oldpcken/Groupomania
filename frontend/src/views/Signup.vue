@@ -25,7 +25,7 @@ export default {
     methods: {
         signup() {
             axios
-                .post("http://localhost:3000/api/auth/signup", this.postData)
+                .post('http://localhost:3000/api/auth/signup', this.postData)
                 .then((response) => {
                     console.log(response);
                     // using stringify to beautify the output

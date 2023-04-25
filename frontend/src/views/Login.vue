@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
 
 export default {
     data() {
@@ -25,12 +25,12 @@ export default {
     methods: {
         login() {
             axios
-                .post("http://localhost:3000/api/auth/login", this.postData)
+                .post('http://localhost:3000/api/auth/login', this.postData)
                 .then((response) => {
                     console.log(response);
                     localStorage.setItem('loginData', JSON.stringify(response.data))
 
-                    // Navigate to the Posts page after successful login
+                    // Navigate to the Posts page (Home page) after successful login
                     this.$router.push({ path: '/' })
                 })
                 .catch((errors) => {

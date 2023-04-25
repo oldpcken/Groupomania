@@ -6,24 +6,13 @@
       {{ this.post.message }}
     </p>
         
-    <video v-if="getExtension(post) === 'wmv'" width="400" controls >
-        <source :src="this.post.mediaUrl" type="video/x-ms-wmv" alt="WMV Player"/>
-        Your browser does not support the video element.
-    </video>
-
-
-    <video v-else-if="getExtension(post) === 'mp4'" width="400" controls >
+    <video v-if="['mp4'].includes(getExtension(post))" controls width="400">
         <source :src="this.post.mediaUrl" type="video/mp4" alt="MP4 Player"/>
         Your browser does not support the video element.
-    </video>
-
-
-    <audio v-else-if="getExtension(post) === 'mp3'" controls >
+    </video>    
+    <audio v-else-if="['mp3', 'wav'].includes(getExtension(post))" controls >
         <source :src="this.post.mediaUrl" type="audio/mpeg" alt="MP3 Player"/>
-        Your browser does not support the audio element.
-    </audio>
-    <audio v-else-if="getExtension(post) === 'wav'" controls >
-        <source :src="this.post.mediaUrl" type="audio/wav" alt="WAV Audio Player"/>        
+        <source :src="this.post.mediaUrl" type="audio/wav" alt="WAV Audio Player"/>
         Your browser does not support the audio element.
     </audio>
     <img v-else-if="['jpg', 'png', 'webp', 'jfif'].includes(getExtension(post))" 
@@ -32,6 +21,7 @@
       <hr>
     </p>
     <button class=btn @click.prevent="postsPage">Back to Posts</button>
+
   </div>
 </template>
 
@@ -60,7 +50,7 @@ export default {
       return url && url.slice(url.lastIndexOf('.') + 1);
     },
     getOnePost() {
-      console.log('geting one post');
+      // Retrieving local storage data
       let loginData = JSON.parse(localStorage.getItem('loginData')) || [];
 
       axios
@@ -70,11 +60,9 @@ export default {
               'Authorization': 'Bearer ' + loginData.token
             }
           })
-        .then((response) => {
-          // this.formatPostData(response.data);
+        .then((response) => {          
           console.log(response);
-
-          // using stringify to beautify the output
+          
           this.post = response.data;
 
           this.readIt();
@@ -88,7 +76,7 @@ export default {
       this.$router.push({ path: '/' })
     },
     readIt() {
-      console.log('Marking as read');
+      // Retrieving local storage data
       let loginData = JSON.parse(localStorage.getItem('loginData')) || [];
       axios
         .put(`http://localhost:3000/api/posts/${this.$route.params.id}/read`,
@@ -100,17 +88,16 @@ export default {
               'Authorization': 'Bearer ' + loginData.token
             }
           })
-        .then((response) => {
-          console.log(response);          
+          .then((response) => {
+            console.log(response);          
           })        
-        .catch((errors) => {
-          console.log(errors);
-        });
-    }
+          .catch((errors) => {
+            console.log(errors);
+          });
+      }
   }
 }
 </script>
-
 
 <style>
 .onepost {

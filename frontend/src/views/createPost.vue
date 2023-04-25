@@ -3,9 +3,7 @@
 
         <h2>Please Create Your Post Here</h2>
 
-        <form>
-            <label>User Name:</label>
-            <input type="text" size="40" required />
+        <form>           
 
             <label>Title:</label>
             <input type="text" size="40" v-model="postData.title" required />
@@ -15,7 +13,7 @@
 
             <div class="file-upload">
 
-                <label>File Attachment (JPG, PNG, WEBP, WMV, MP4, MP3, WAV)</label>
+                <label>Attach File (JPG, PNG, JFIF, WEBP, MP4, MP3, WAV)</label>
                 <input type="file" ref="media" @change="onMediaChange" />
 
                 <button class="btn" @click.prevent="submit">POST IT</button>
@@ -47,24 +45,20 @@ export default {
         }
     },
     methods: {
+        // Check for a media file
         onMediaChange() {
-            this.media = this.$refs.media.files[0]; 
-                   
+            this.media = this.$refs.media.files[0];                   
         },   
         submit() {  
-            console.log('Submit entered');
+            // Retrieving local storage data
             let loginData = JSON.parse(localStorage.getItem('loginData')) || [];
-            this.postData.userId = loginData.userId;           
-            
-            console.log('This is this.postData.userId ', this.postData.userId);          
-            
+            this.postData.userId = loginData.userId;                    
+                        
             if (!this.media) {
-                console.log('No media path taken');
-               
-                console.log(this.postData);
+                // Create a post without adding a media file
                 axios
                     .post('http://localhost:3000/api/posts', 
-                            JSON.stringify(this.postData),                        
+                        JSON.stringify(this.postData),                        
                         { 
                             headers: { 'Authorization': 'Bearer ' + loginData.token,
                                         'Content-Type':  'application/json'
@@ -76,10 +70,10 @@ export default {
                         console.log('SUCCESS!!');
                     }.bind(this))
 
-                    // Navigate to the posts(Home) page after successful posting
-                    // this.$router
-                    //     .push({ path: '/' })
-                    //     .then(() => { this.$router.go() })
+                    // Navigate to the Posts(Home) page after successful posting
+                    this.$router
+                        .push({ path: '/' })
+                        .then(() => { this.$router.go() })
 
                     .catch(function (error) {
                         this.axiosError = error;
@@ -87,8 +81,7 @@ export default {
                     }.bind(this));
                 
             } else {
-                
-                console.log('Else path taken');
+                // Create a post adding a media file
                 let formData = new FormData();
                 formData.append('post', JSON.stringify(this.postData));
                 formData.append('media', this.media);
@@ -108,9 +101,9 @@ export default {
                     }.bind(this))
 
                     // Navigate to the posts(Home) page after successful posting
-                    // this.$router
-                    //     .push({ path: '/' })
-                    //     .then(() => { this.$router.go() })
+                    this.$router
+                        .push({ path: '/' })
+                        .then(() => { this.$router.go() })
 
                     .catch(function (error) {
                         this.axiosError = error;

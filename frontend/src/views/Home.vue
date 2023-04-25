@@ -16,8 +16,7 @@
           <a :href="'/onepost/' + post.id" @click="readIt">
             {{ post.title }}
           </a>
-          <span v-if="!isRead(post)" class="didYou">unread</span>
-
+          <span v-if="!isRead(post)">unread</span>
         </tr>
       </tbody>
     </table>
@@ -48,10 +47,11 @@ export default {
   },
   methods: {
     allPosts() {
+      // Retrieving local storage data
       let loginData = JSON.parse(localStorage.getItem('loginData')) || [];
       this.userId = loginData.userId;
       axios
-        .get("http://localhost:3000/api/posts",
+        .get('http://localhost:3000/api/posts',
           {
             headers: {
               'Authorization': 'Bearer ' + loginData.token
@@ -62,22 +62,22 @@ export default {
           console.log(response);
 
           // using stringify to beautify the output
-          this.res = JSON.stringify(response.data);
+          // this.res = JSON.stringify(response.data);
         })
         .catch((errors) => {
           console.log(errors);
         });
     },
     isRead(post) {
+      // See if the post has been read by the user
       return post.usersRead && post.usersRead.includes(this.userId);
     },    
     createPost() {
-      // Navigate to the Create Post page after selecting button
+      // Navigate to the Create Post page
       this.$router.push({ path: '/posts' })
     }
-  },    
+  }    
 }
-
 </script>
 
 <style scoped>
@@ -93,7 +93,6 @@ table {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
 }
 
 button {
@@ -101,13 +100,6 @@ button {
   text-align: center;
   margin: 1px auto;
   color: black;
-}
-
-.didYou {
-  display: inline;
-  justify-items: right;
-  align-items: right;
-  margin-left: 10px;
 }
 
 th {

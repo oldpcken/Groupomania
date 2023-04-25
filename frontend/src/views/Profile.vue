@@ -2,7 +2,7 @@
   <div class="profile">
     <h1>Employee User Profile</h1>
 
-    <h2>Account for {{ name }}</h2>
+    <h2>Account for {{ this.name }}</h2>
     <h2>If you no longer want to use the forum, you may delete your account!</h2>
 
     <button class="btn" @click.prevent="profile">DELETE your account</button>
@@ -15,7 +15,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      // data to return
+      name: ''
     };
   },
   beforeCreate() {
@@ -54,8 +54,6 @@ export default {
     }
   },
 }
-
-//TODO show username , user id, and token taken from local storage
 
 </script>
 
