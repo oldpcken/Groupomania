@@ -25,7 +25,7 @@ const connection = new Sequelize(dbConfig);
 
 module.exports = connection;
 
-// Connection to Postgres database
+// Connection to Postgres Database
 const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, 
     {
       host: dbConfig.HOST,

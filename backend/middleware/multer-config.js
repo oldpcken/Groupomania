@@ -5,13 +5,13 @@ const multer = require('multer');
 const MIME_TYPES = {
     'audio/mpeg': 'mp3',
     'audio/wav': 'wav',
-    'video/mp4': 'mp4',
-    'video/x-ms-wmv': 'wmv',
+    'video/mp4': 'mp4',    
     'image/jpg': 'jpg',
     'image/jpeg': 'jpg',
+    'image/x-png': 'png',
     'image/png': 'png',
     'image/webp': 'webp',
-    'image/jfif': 'jfif'        
+    'image/jpeg': 'jfif'        
 };
 
 const storage = multer.diskStorage({

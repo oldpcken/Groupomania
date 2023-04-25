@@ -21,8 +21,9 @@ exports.getAllPosts = (req, res, next) => {
 exports.createPost = (req, res, next) => {
 
     const url = req.protocol + '://' + req.get('host');
-
+    
     if (req.file) {
+        // Post with a media file
         const parsedPost = JSON.parse(req.body.post);
         const post = new Post({
             userId: parsedPost.userId,
@@ -43,6 +44,7 @@ exports.createPost = (req, res, next) => {
                 });
             });
     } else {
+        // Post without a media file
         const post = new Post({
             userId: req.body.userId,
             title: req.body.title,
@@ -86,7 +88,7 @@ exports.markPostRead = (req, res, next) => {
             const alreadyRead = post.usersRead.includes(readId);
 
             if (alreadyRead) {
-                // don't push to array
+                // Don't push user to array
                 res.status(304).json({ message: 'Post Already Read!' });
                 console.log('User has already read the post!')
             } else {
