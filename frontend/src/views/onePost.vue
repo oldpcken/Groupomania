@@ -5,24 +5,28 @@
     <p>
       {{ this.post.message }}
     </p>
+        
+    <video v-if="getExtension(post) === 'wmv'" width="400" controls >
+        <source :src="this.post.mediaUrl" type="video/x-ms-wmv" alt="WMV Player"/>
+        Your browser does not support the video element.
+    </video>
 
-    <!-- <audio v-if="getExtension(post) === 'mp3'" controls 
-        :src="this.post.mediaUrl" type="audio/mpeg" alt="MP3 Player">
-         Your browser does not support the audio element.
-    </audio>
-    <audio v-else-if="getExtension(post) === 'wav'" controls 
-        :src="this.post.mediaUrl" type="audio/wav" alt="WAV Audio Player">
+
+    <video v-else-if="getExtension(post) === 'mp4'" width="400" controls >
+        <source :src="this.post.mediaUrl" type="video/mp4" alt="MP4 Player"/>
+        Your browser does not support the video element.
+    </video>
+
+
+    <audio v-else-if="getExtension(post) === 'mp3'" controls >
+        <source :src="this.post.mediaUrl" type="audio/mpeg" alt="MP3 Player"/>
         Your browser does not support the audio element.
     </audio>
-    <video v-else-if="getExtension(post) === 'wmv'" width="400" controls autoplay
-        :src="this.post.mediaUrl" type="video/x-ms-wmv" alt="WMV Player">
-      Your browser does not support the video element.
-    </video>
-    <video v-else-if="getExtension(post) === 'mp4'" width="400" controls autoplay
-        :src="this.post.mediaUrl" type="video/mp4" alt="MP4 Player">
-        Your browser does not support the video element.
-    </video> -->
-    <img v-if="['jpg', 'png', 'webp', 'jfif'].includes(getExtension(post))" 
+    <audio v-else-if="getExtension(post) === 'wav'" controls >
+        <source :src="this.post.mediaUrl" type="audio/wav" alt="WAV Audio Player"/>        
+        Your browser does not support the audio element.
+    </audio>
+    <img v-else-if="['jpg', 'png', 'webp', 'jfif'].includes(getExtension(post))" 
         :src="this.post.mediaUrl" width='400' alt="picture">
     <p v-else="getExtension(post) === null">
       <hr>
@@ -97,11 +101,8 @@ export default {
             }
           })
         .then((response) => {
-          console.log(response);
-          res.status(300).json({
-            message: 'Post read processing'
-          })
-        })
+          console.log(response);          
+          })        
         .catch((errors) => {
           console.log(errors);
         });

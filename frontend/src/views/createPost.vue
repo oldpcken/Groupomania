@@ -77,9 +77,9 @@ export default {
                     }.bind(this))
 
                     // Navigate to the posts(Home) page after successful posting
-                    this.$router
-                        .push({ path: '/' })
-                        .then(() => { this.$router.go() })
+                    // this.$router
+                    //     .push({ path: '/' })
+                    //     .then(() => { this.$router.go() })
 
                     .catch(function (error) {
                         this.axiosError = error;
@@ -108,9 +108,9 @@ export default {
                     }.bind(this))
 
                     // Navigate to the posts(Home) page after successful posting
-                    this.$router
-                        .push({ path: '/' })
-                        .then(() => { this.$router.go() })
+                    // this.$router
+                    //     .push({ path: '/' })
+                    //     .then(() => { this.$router.go() })
 
                     .catch(function (error) {
                         this.axiosError = error;
