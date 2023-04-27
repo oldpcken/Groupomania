@@ -35,6 +35,8 @@ export default {
                 })
                 .catch((errors) => {
                     console.log(errors);
+                    // Send user to Signup page on a bad login
+                    this.$router.push({ path: '/signup' })
                 });
         }
     }

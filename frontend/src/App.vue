@@ -116,7 +116,7 @@ button {
   font-size: 1.2rem;
   background-color: white;
   border-color: white;
-  color: hsla(160, 100%, 37%, 1);
+  color: rgb(247, 104, 133);
 }
 
 </style>

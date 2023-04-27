@@ -48,7 +48,7 @@ export default {
         // Check for a media file
         onMediaChange() {
             this.media = this.$refs.media.files[0];                   
-        },   
+        },        
         submit() {  
             // Retrieving local storage data
             let loginData = JSON.parse(localStorage.getItem('loginData')) || [];
@@ -64,10 +64,9 @@ export default {
                                         'Content-Type':  'application/json'
                             }                         
                         })
-                    .then(function (response) {
-                        
+                    .then(function (response) {                        
                         this.postData = response.data;
-                        console.log('SUCCESS!!');
+                        console.log('SUCCESSFUL medialess Post!!');
                     }.bind(this))
 
                     // Navigate to the Posts(Home) page after successful posting
@@ -94,16 +93,15 @@ export default {
                             'Content-Type': 'multipart/form-data'
                         }
                     })
-                    .then(function (response) {
-                        
+                    .then(function (response) {                        
                         this.postData = response.data;
-                        console.log('SUCCESS!!');
-                    }.bind(this))
+                        console.log('SUCCESSFUL Media Post!!');
+                        }.bind(this)) 
 
-                    // Navigate to the posts(Home) page after successful posting
-                    this.$router
-                        .push({ path: '/' })
-                        .then(() => { this.$router.go() })
+                        // Navigate to the posts(Home) page after successful posting
+                        this.$router
+                            .push({ path: '/' })
+                            .then(() => { this.$router.go() })                        
 
                     .catch(function (error) {
                         this.axiosError = error;

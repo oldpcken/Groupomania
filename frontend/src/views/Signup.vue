@@ -11,6 +11,9 @@
         </form>
         <button class="btn" @click.prevent="signup">SIGNUP</button>
     </div>
+    <div>
+        <h3>Please signup to join the forum!</h3>
+    </div>
 </template>
 
 <script>

@@ -2,7 +2,7 @@
   <div class="profile">
     <h1>Employee User Profile</h1>
 
-    <h2>Account for {{ this.name }}</h2>
+    <h2>Account for {{ name }}</h2>
     <h2>If you no longer want to use the forum, you may delete your account!</h2>
 
     <button class="btn" @click.prevent="profile">DELETE your account</button>
@@ -19,16 +19,21 @@ export default {
     };
   },
   beforeCreate() {
-    if (localStorage.getItem('loginData') === null) {
+    const loginData = JSON.parse(localStorage.getItem('loginData'));
+    if (loginData === null) {
       // Go to login page if user is not logged in
       this.$router.push({ path: '/login' })
     }
+  },
+  mounted() {
+    const loginData = JSON.parse(localStorage.getItem('loginData'));
+    this.name = loginData.user;
   },
   methods: {
     profile() {
       // Get local storage data
       let loginData = JSON.parse(localStorage.getItem('loginData')) || [];
-
+      
       console.log(loginData);
 
       axios

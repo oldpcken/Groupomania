@@ -59,10 +59,7 @@ export default {
           })
         .then((response) => {          
           this.postData = response.data;
-          console.log(response);
-
-          // using stringify to beautify the output
-          // this.res = JSON.stringify(response.data);
+          console.log(response);          
         })
         .catch((errors) => {
           console.log(errors);
@@ -87,6 +84,7 @@ h2 {
 
 a {
   color: black;
+  margin-left: 10px;
 }
 
 table {
@@ -104,18 +102,18 @@ button {
 
 th {
   font-size: 1.5rem;
-  padding: 2px;
-  margin: 50px 50px;
+  padding: 4px;  
 }
 
 tr {
   font-size: 1.5rem;
-  padding: 2px;
+  padding: 5px;
   margin: 5px 5px;
 }
 
 span {
-  padding: 0 2px;
+  padding: 0 4px;
+  margin-left: 10px;
   background-color: rgb(250, 167, 184);
 }
 </style>
