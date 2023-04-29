@@ -40,9 +40,11 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <script>
 
-export default{
-    date() {
-        // data here
+export default {
+    data() {
+      return {  
+      // data here
+      }
     },
     methods: {
         logout() {

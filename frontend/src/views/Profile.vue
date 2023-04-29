@@ -23,6 +23,7 @@ export default {
     if (loginData === null) {
       // Go to login page if user is not logged in
       this.$router.push({ path: '/login' })
+      .then(() => { this.$router.go() })
     }
   },
   mounted() {
