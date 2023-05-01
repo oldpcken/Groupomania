@@ -43,7 +43,7 @@ export default {
     }
   },
   mounted() {
-    this.allPosts();
+    this.allPosts();    
   },
   methods: {
     allPosts() {

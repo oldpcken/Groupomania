@@ -3,7 +3,7 @@
 
         <h2>Please Create Your Post Here</h2>
 
-        <form>           
+        <form>
 
             <label>Title:</label>
             <input type="text" size="40" v-model="postData.title" required />
@@ -47,38 +47,38 @@ export default {
     methods: {
         // Check for a media file
         onMediaChange() {
-            this.media = this.$refs.media.files[0];                   
-        },        
-        submit() {  
+            this.media = this.$refs.media.files[0];
+        },
+        submit() {
             // Retrieving local storage data
             let loginData = JSON.parse(localStorage.getItem('loginData')) || [];
-            this.postData.userId = loginData.userId;                    
-                        
+            this.postData.userId = loginData.userId;
+
             if (!this.media) {
                 // Create a post without adding a media file
                 axios
-                    .post('http://localhost:3000/api/posts', 
-                        JSON.stringify(this.postData),                        
-                        { 
-                            headers: { 'Authorization': 'Bearer ' + loginData.token,
-                                        'Content-Type':  'application/json'
-                            }                         
+                    .post('http://localhost:3000/api/posts',
+                        JSON.stringify(this.postData),
+                        {
+                            headers: {
+                                'Authorization': 'Bearer ' + loginData.token,
+                                'Content-Type': 'application/json'
+                            }
                         })
-                    .then(function (response) {                        
+                    .then(function (response) {
                         this.postData = response.data;
                         console.log('SUCCESSFUL medialess Post!!');
+                        // Navigate to the Posts(Home) page after successful posting
+                        this.$router
+                            .push({ path: '/' })
+                            .then(() => { this.$router.go() })
                     }.bind(this))
-
-                    // Navigate to the Posts(Home) page after successful posting
-                    this.$router
-                        .push({ path: '/' })
-                        .then(() => { this.$router.go() })
 
                     .catch(function (error) {
                         this.axiosError = error;
-                        console.log('FAILURE!!');
+                        console.log('FAILURE to create a post without a file!!');
                     }.bind(this));
-                
+
             } else {
                 // Create a post adding a media file
                 let formData = new FormData();
@@ -93,21 +93,20 @@ export default {
                             'Content-Type': 'multipart/form-data'
                         }
                     })
-                    .then(function (response) {                        
+                    .then(function (response) {
                         this.postData = response.data;
                         console.log('SUCCESSFUL Media Post!!');
-                        }.bind(this)) 
-
                         // Navigate to the posts(Home) page after successful posting
                         this.$router
                             .push({ path: '/' })
-                            .then(() => { this.$router.go() })                        
+                            .then(() => { this.$router.go() })
+                    }.bind(this))
 
                     .catch(function (error) {
                         this.axiosError = error;
-                        console.log('FAILURE!!');
+                        console.log('FAILURE to create a post with media files!!');
                     }.bind(this));
-            } 
+            }
         }
     }
 }
@@ -134,7 +133,7 @@ label {
 
 textarea {
     display: block;
-    margin: 10px 5px;    
+    margin: 10px 5px;
 }
 
 .btn {
